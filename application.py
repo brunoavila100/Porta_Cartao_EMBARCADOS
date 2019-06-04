@@ -10,7 +10,7 @@ from datetime import datetime
 import serial
 import csv
 
-__author__ = 'hiroshi.siq'
+__author__ = 'denys_coco'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
