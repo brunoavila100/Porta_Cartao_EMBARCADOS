@@ -53,3 +53,7 @@ Relé 5V
 
 Leds
 ![alt text](https://github.com/brunoavila100/Porta_Cartao_EMBARCADOS/blob/master/fotos/led.jpg)
+
+*****************************
+Esquemático:
+![alt text](https://github.com/brunoavila100/Porta_Cartao_EMBARCADOS/blob/master/fotos/esquematico.png)
