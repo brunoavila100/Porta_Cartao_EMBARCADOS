@@ -41,7 +41,7 @@ Arduino UNO
 Raspiberry Pi 3
 ![alt text](https://github.com/brunoavila100/Porta_Cartao_EMBARCADOS/blob/master/fotos/rpi3.jpg)
 
-Trava 12V 
+Trava 12V
 ![alt text](https://github.com/brunoavila100/Porta_Cartao_EMBARCADOS/blob/master/fotos/trava-12v.jpg)
 
 Relé 5V
