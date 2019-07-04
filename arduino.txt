@@ -1,11 +1,11 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-#define ledVerde 7
-#define ledVermelho 6
-#define SS_PIN 10
-#define RST_PIN 9
-#define pinoFechadura 3
+#define ledVerde 7     //led verde na porta 7 do arduino
+#define ledVermelho 6  //led vermelho na porta 6 do arduino
+#define SS_PIN 10  //ligacao do MFRC
+#define RST_PIN 9  //ligacao do MFRC
+#define pinoFechadura 3  //sinal 5V do rele na porta 3 do arduino
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Criar MFRC522.
 
 char st[20];
@@ -15,29 +15,29 @@ void setup()
   Serial.begin(9600);   // Inicia a serial
   SPI.begin();      // Inicia  SPI bus
   mfrc522.PCD_Init();   // Inicia MFRC522
-  pinMode(pinoFechadura, OUTPUT);
-  pinMode(ledVerde, OUTPUT);
-  pinMode(ledVermelho, OUTPUT);
-  digitalWrite(pinoFechadura, HIGH);
-  digitalWrite(ledVerde, LOW);
-  digitalWrite(ledVermelho, LOW);
-  Serial.println("Aproxime o seu cartao do leitor...");
+  pinMode(pinoFechadura, OUTPUT); //seta como saida
+  pinMode(ledVerde, OUTPUT); //seta como saida
+  pinMode(ledVermelho, OUTPUT); //seta como saida
+  digitalWrite(pinoFechadura, HIGH); //seta como sinal alto no inicio da operacao
+  digitalWrite(ledVerde, LOW); //seta como sinal baixo no inicio da operacao
+  digitalWrite(ledVermelho, LOW);  //seta como sinal baixo no inicio da operacao
+  Serial.println("Aproxime o seu cartao do leitor..."); //Mensagem exibida no inicio
   Serial.println();
 }
 
 void loop()
 {
-  // Look for new cards
+  // Procurando por cartoes que aproximem
   if ( ! mfrc522.PICC_IsNewCardPresent())
   {
     return;
   }
-  // Select one of the cards
+  // Seleciona um dos cartoes 
   if ( ! mfrc522.PICC_ReadCardSerial())
   {
     return;
   }
-  String conteudo = "";
+  String conteudo = ""; //reservado para leitura do cartao
   byte letra;
   for (byte i = 0; i < mfrc522.uid.size; i++)
   {
@@ -49,7 +49,7 @@ void loop()
   if (conteudo.substring(1) == "40 BF 4B D3") //UID 1 - Cartao 1
   {
     Serial.println("d"); //cartao denys
-    abrirFechadura();
+    abrirFechadura(); //chama a funcao de abrir fechadura
     delay(100);
     conteudo.substring(1) = "";
   }
@@ -57,7 +57,7 @@ void loop()
   else if (conteudo.substring(1) == "40 EE 23 D4") //UID 2 - Cartao 2
   {
     Serial.println("b"); // cartao avila
-    abrirFechadura();
+    abrirFechadura(); //chama a funcao de abrir fechadura
     Serial.println();
     delay(100);
   }
@@ -66,16 +66,16 @@ void loop()
   {
     Serial.println("Entrada nao permitida. Favor realizar cadastro."); // qqr outro cartao
     Serial.println("n");
-    digitalWrite(ledVermelho, HIGH);
+    digitalWrite(ledVermelho, HIGH); //acende led vermelho
     delay(2000);
-    digitalWrite(ledVermelho, LOW);
+    digitalWrite(ledVermelho, LOW); //apaga led vermelho
   }
 }
 
 void abrirFechadura() {
-  digitalWrite(pinoFechadura, LOW);
-  digitalWrite(ledVerde, HIGH);
+  digitalWrite(pinoFechadura, LOW); //abre fechadura
+  digitalWrite(ledVerde, HIGH); //acende led verde
   delay(5000);
-  digitalWrite(pinoFechadura, HIGH);
-  digitalWrite(ledVerde, LOW);
+  digitalWrite(pinoFechadura, HIGH); //fecha fechadura apos 5s
+  digitalWrite(ledVerde, LOW); //apaga led verde
 }
